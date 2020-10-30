@@ -243,11 +243,10 @@ public class EvaluationService {
 	public String cleanPhoneNumber(String string) {
 		// no letters. no more than 11 digits
 	
-		String [] number = string.split("[a-z , ?.\\(\\)@!-]+");
+		String [] number = string.split("[a-z, ?.\\(\\)@!-]+");
 		//(223) 456-7890  -> {223,456,7890}
 		String s = "";
 	    for (String n:number)
-	    	//if (s)
 	        s+= n;
 	    
 	    if (s.length()>11) {
@@ -469,8 +468,9 @@ public class EvaluationService {
 			for (int i=0;i<val.length; i++) {
 				char letter=val[i];
 				if (letter >= 'a' && letter <='z') {
-					if (letter >'m') {
-						//letter-=
+					//ig goes beyond z, substract
+					if (letter >'z') {
+						//end of letters
 					}
 				}
 			}
@@ -753,30 +753,45 @@ public class EvaluationService {
 	public boolean isLuhnValid(String string) {
 	    int sum=0;
 	    //validate the string
-	    if (string.split("[+-.@!]").equals(null)) {
-	    	return false;
-	    }
-	    
-	    int[] numArr=new int[string.length()];
-	    
-	    for (int i=0; i <string.length();i++) {
-	    	char c=string.charAt(i);
-	    	
-	    	
-	    }
-	    
-	    /*
-		String str= string.replaceAll("\\s", "");
-	    int[] reversed = new int[string.length()];
-		for (int i = reversed.length - 1, j=0; i >= 0; i--, j++) {
-			reversed[j] = str.charAt(i);
+	    if (string.matches(".*[a-z].*||.*-.*")){
+	        return false;
+	     }
+	    //convert our space separated ***
+	    String str= string.replaceAll("\\s","");
+
+	    int[] numArr=new int[str.length()];
+	    for (int i = numArr.length - 1, j=0; i >= 0; i--, j++) {
+			numArr[j] = Integer.parseInt(String.valueOf(str.charAt(i)));
 		}
+	    for (int i=0; i <numArr.length;i++) {
+	  	  if ( (i+1)%2 == 0) {
+	        int doubled=numArr[i]*2;
+
+	        if (doubled >=9){
+	          int dobMinus=doubled-9;
 	    
-		//System.out.println(Arrays.toString(reversed));
-			
-		*/
+	          sum+=dobMinus;
+	          //System.out.println("added d-9="+dobMinus);
+	        }
+	        else if (doubled<9){
+	          sum+=doubled;
+	          //System.out.println("added d "+doubled);
+	        }
+	  	  }
+	      else{
+	        sum+=numArr[i];
+	        //System.out.println("added"+numArr[i]);
+	      }
+	  	} 
+	    // now we can loop through int[] numArr
+	    
+	  if (sum%10 ==0) {
+		  return true;
+	  }
+	  else {
 		
-		return true;
+		return false;
+	  }
 	}
 
 	/**
