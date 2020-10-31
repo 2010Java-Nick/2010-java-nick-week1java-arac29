@@ -322,10 +322,31 @@ public class EvaluationService {
 	 * binary search is a dichotomic divide and conquer search algorithm.
 	 * 
 	 */
-	static class BinarySearch<T extends Comparable<T>> {
+	static class BinarySearch<T extends Comparable< ? super T>> {
 		private List<T> sortedList;
+		// it has to be sorted 
 
 		public int indexOf(T t) {
+			
+			// to calculate the mid point
+			/*int first=0;
+			int last=sortedList.size()-1;
+			int pos=-1;
+	
+			while (first <=last) {
+				int mid=(first+last)/2;
+				if (sortedList.get(mid).equals(t)) {
+					
+					pos=mid;
+				}
+				else if(sortedList.get(mid).compareTo(t)>0) {
+					last=mid-1;
+				}
+				else {
+					first =mid+1;
+				}
+				return pos;
+			}	*/
 			// TODO Write an implementation for this method declaration
 			return 0;
 		}
@@ -363,6 +384,31 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String toPigLatin(String string) {
+		// not completed, implemented for Rule1 only
+		
+		String [] wordArr= string.split("[ ]+");
+		
+		char[] wordChar = new char[wordArr.length];
+		
+		String wordString=""; String trans="";
+		
+		for (String n :wordArr)
+			wordString+=n;
+		
+		for (int i =0 ;i < wordString.length() ;i++) {
+			
+			char letterOfWord= wordString.charAt(i);
+			switch(letterOfWord) {
+			case 'a':
+				return wordString+"ay";
+			case 'e':
+				return wordString+"ay";
+			case 'i':
+				return wordString+"ay";
+			case 'o':
+				return wordString+"ay";
+			}
+		}
 		// TODO Write an implementation for this method declaration
 		return null;
 	}
@@ -467,12 +513,9 @@ public class EvaluationService {
 			char[] val=string.toCharArray();
 			for (int i=0;i<val.length; i++) {
 				char letter=val[i];
-				if (letter >= 'a' && letter <='z') {
-					//ig goes beyond z, substract
-					if (letter >'z') {
-						//end of letters
-					}
-				}
+				char c=0;
+				
+				
 			}
 			// TODO Write an implementation for this method declaration
 			return null;
@@ -682,7 +725,7 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Temporal getGigasecondDate(Temporal given) {
-		//si supported (Chrono.Unit 
+		//si supported (Chrono.Unit )
 		// TODO Write an implementation for this method declaration
 		return null;
 	}
